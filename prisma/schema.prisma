@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int            @id @default(autoincrement())
+  login        String         @unique
+  role         String
+  full_name    String
+  email        String         @unique
+  loans        Loan[]
+  maturitaList MaturitaList[]
+}
+
+model Warehouse {
+  id      Int        @id @default(autoincrement())
+  name    String
+  address String
+  items   BookItem[]
+}
+
+model Book {
+  id           Int            @id @default(autoincrement())
+  title        String
+  author       String
+  isbn         String?
+  is_virtual   Boolean        @default(false)
+  items        BookItem[]
+  maturitaList MaturitaList[]
+}
+
+model BookItem {
+  id          String    @id @default(uuid())
+  bookId      Int
+  book        Book      @relation(fields: [bookId], references: [id])
+  warehouseId Int
+  warehouse   Warehouse @relation(fields: [warehouseId], references: [id])
+  status      String
+  loans       Loan[]
+}
+
+model Loan {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
+  bookItemId  String
+  bookItem    BookItem  @relation(fields: [bookItemId], references: [id])
+  borrowed_at DateTime  @default(now())
+  returned_at DateTime?
+  deadline    DateTime
+}
+
+model MaturitaList {
+  id     Int  @id @default(autoincrement())
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+  bookId Int
+  book   Book @relation(fields: [bookId], references: [id])
+}

@@ -11,12 +11,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "*",
-    "prisma": "*",
-    "@prisma/client": "*",
+    "@prisma/client": "5.22.0",
     "ejs": "*",
     "exceljs": "*",
-    "qrcode": "*",
-    "passport": "*"
+    "express": "*",
+    "passport": "*",
+    "prisma": "5.22.0",
+    "qrcode": "*"
   }
 }
