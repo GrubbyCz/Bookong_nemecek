@@ -1,0 +1,53 @@
+<%- include('../partials/header') %>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3>Přidat novou knihu</h3>
+            </div>
+            <div class="card-body">
+                <form action="/books/create" method="POST">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Název knihy *</label>
+                        <input type="text" class="form-control" id="title" name="title" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="author" class="form-label">Autor *</label>
+                        <input type="text" class="form-control" id="author" name="author" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="isbn" class="form-label">ISBN</label>
+                        <input type="text" class="form-control" id="isbn" name="isbn" placeholder="Volitelné">
+                        <div class="form-text">Pokud zadáte ISBN existující knihy, naskladní se nové kusy k ní.</div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="quantity" class="form-label">Počet kusů k naskladnění *</label>
+                            <input type="number" class="form-control" id="quantity" name="quantity" min="1" value="1" required>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="warehouseId" class="form-label">Sklad *</label>
+                            <select class="form-select" id="warehouseId" name="warehouseId">
+                                <% warehouses.forEach(function(wh) { %>
+                                    <option value="<%= wh.id %>"><%= wh.name %> (<%= wh.address %>)</option>
+                                <% }); %>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success">Uložit a naskladnit</button>
+                        <a href="/books" class="btn btn-secondary">Zrušit</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

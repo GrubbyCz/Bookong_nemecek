@@ -15,6 +15,7 @@
     "ejs": "*",
     "exceljs": "*",
     "express": "*",
+    "multer": "^2.0.2",
     "passport": "*",
     "prisma": "5.22.0",
     "qrcode": "*"

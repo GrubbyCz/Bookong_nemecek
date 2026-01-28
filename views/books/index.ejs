@@ -1,0 +1,79 @@
+<%- include('../partials/header') %>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Seznam knih</h2>
+    <div class="btn-group">
+        <a href="/books/create" class="btn btn-primary">Přidat novou knihu</a>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importModal">
+            Importovat Excel
+        </button>
+    </div>
+</div>
+
+<!-- Import Modal -->
+<div class="modal fade" id="importModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/books/import" method="POST" enctype="multipart/form-data">
+        <div class="modal-header">
+          <h5 class="modal-title">Importovat knihy z Excelu</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+              <label for="file" class="form-label">Vyberte soubor (.xlsx)</label>
+              <input class="form-control" type="file" id="file" name="file" accept=".xlsx" required>
+          </div>
+          <div class="alert alert-info">
+              <small>
+                  Očekávané sloupce (bez diakritiky v hlavičce nevadí, pořadí je důležité):<br>
+                  1. Název knihy<br>
+                  2. Autor<br>
+                  3. ISBN<br>
+                  4. Počet kusů<br>
+                  5. Název skladu
+              </small>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zavřít</button>
+          <button type="submit" class="btn btn-success">Nahrát a zpracovat</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<table class="table table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Název</th>
+            <th>Autor</th>
+            <th>ISBN</th>
+            <th>Celkem kusů</th>
+            <th>Volné kusy</th>
+            <th>Akce</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% books.forEach(book => { %>
+            <tr>
+                <td><%= book.title %></td>
+                <td><%= book.author %></td>
+                <td><%= book.isbn ? book.isbn : '-' %></td>
+                <td><%= book.items.length %></td>
+                <td><%= book.items.filter(i => i.status === 'available').length %></td>
+                <td>
+                    <!-- Zde bude v budoucnu detail knihy -->
+                    <a href="#" class="btn btn-sm btn-info text-white">Detail</a>
+                </td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>
+
+<% if (books.length === 0) { %>
+    <p class="text-center text-muted">Zatím nebyly přidány žádné knihy.</p>
+<% } %>
+
+<%- include('../partials/footer') %>
