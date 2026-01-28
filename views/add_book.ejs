@@ -1,47 +1,38 @@
-<!DOCTYPE html>
-<html lang="cs">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Přidat novou knihu</title>
-</head>
-<body>
-    <h1>Přidat novou knihu</h1>
+<%- include('partials/header') %>
     
-    <form action="/books/add" method="POST">
-        <div>
-            <label for="title">Název knihy:</label><br>
-            <input type="text" id="title" name="title" required>
+    <h2>Přidat novou knihu</h2>
+    
+    <form action="/books/add" method="POST" class="mt-4">
+        <div class="mb-3">
+            <label for="title" class="form-label">Název knihy:</label>
+            <input type="text" class="form-control" id="title" name="title" required>
         </div>
-        <br>
-        <div>
-            <label for="author">Autor:</label><br>
-            <input type="text" id="author" name="author" required>
+        
+        <div class="mb-3">
+            <label for="author" class="form-label">Autor:</label>
+            <input type="text" class="form-control" id="author" name="author" required>
         </div>
-        <br>
-        <div>
-            <label for="isbn">ISBN:</label><br>
-            <input type="text" id="isbn" name="isbn">
+        
+        <div class="mb-3">
+            <label for="isbn" class="form-label">ISBN:</label>
+            <input type="text" class="form-control" id="isbn" name="isbn">
         </div>
-        <br>
-        <div>
-            <label for="quantity">Počet kusů k naskladnění:</label><br>
-            <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+        
+        <div class="mb-3">
+            <label for="quantity" class="form-label">Počet kusů k naskladnění:</label>
+            <input type="number" class="form-control" id="quantity" name="quantity" min="1" value="1" required>
         </div>
-        <br>
-        <div>
-            <label for="warehouseId">Sklad:</label><br>
-            <select id="warehouseId" name="warehouseId">
+        
+        <div class="mb-3">
+            <label for="warehouseId" class="form-label">Sklad:</label>
+            <select class="form-select" id="warehouseId" name="warehouseId">
                 <% warehouses.forEach(function(wh) { %>
                     <option value="<%= wh.id %>"><%= wh.name %> (<%= wh.address %>)</option>
                 <% }); %>
             </select>
         </div>
-        <br>
-        <button type="submit">Uložit knihu</button>
+        
+        <button type="submit" class="btn btn-primary">Uložit knihu</button>
     </form>
     
-    <br>
-    <a href="/">Zpět na hlavní stránku</a>
-</body>
-</html>
+<%- include('partials/footer') %>

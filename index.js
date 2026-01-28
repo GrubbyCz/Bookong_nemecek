@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bookRoutes = require('./src/routes/BookRoutes');
+const warehouseRoutes = require('./src/routes/WarehouseRoutes');
 
 const app = express();
 const port = 3000;
@@ -23,6 +24,7 @@ app.get('/', (req, res) => {
 
 // Registrace rout
 app.use('/books', bookRoutes);
+app.use('/warehouses', warehouseRoutes);
 
 // Spuštění serveru
 app.listen(port, () => {

@@ -1,0 +1,58 @@
+<%- include('partials/header') %>
+
+<h2>Správa skladů</h2>
+
+<% if (typeof error !== 'undefined' && error) { %>
+    <div class="alert alert-danger" role="alert">
+        <%= error %>
+    </div>
+<% } %>
+
+<div class="row">
+    <div class="col-md-8">
+        <h3>Seznam skladů</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Název</th>
+                    <th>Adresa</th>
+                    <th>Akce</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% warehouses.forEach(function(wh) { %>
+                    <tr>
+                        <td><%= wh.name %></td>
+                        <td><%= wh.address %></td>
+                        <td>
+                            <form action="/warehouses/delete/<%= wh.id %>" method="POST" onsubmit="return confirm('Opravdu smazat?');">
+                                <button type="submit" class="btn btn-danger btn-sm">Smazat</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">Přidat nový sklad</div>
+            <div class="card-body">
+                <form action="/warehouses/create" method="POST">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Název</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Adresa</label>
+                        <input type="text" class="form-control" id="address" name="address" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Uložit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>
