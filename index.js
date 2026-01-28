@@ -1,7 +1,13 @@
 const express = require('express');
 const path = require('path');
+const bookRoutes = require('./src/routes/BookRoutes');
+
 const app = express();
 const port = 3000;
+
+// Middleware pro parsování formulářů (POST data)
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Nastavení EJS jako šablonovacího systému
 app.set('view engine', 'ejs');
@@ -14,6 +20,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
   res.render('index');
 });
+
+// Registrace rout
+app.use('/books', bookRoutes);
 
 // Spuštění serveru
 app.listen(port, () => {
